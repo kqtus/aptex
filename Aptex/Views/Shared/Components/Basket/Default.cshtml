@@ -3,8 +3,7 @@
 @{
     ViewData["Title"] = "Default";
 }
-
-<a href="#">Basket: 
+<a class="nav-link text-dark" asp-controller="Basket" asp-action="Index">Basket: 
     <span class="badge badge-pill badge-success">@Model.ItemsCount</span>
 </a>
 
