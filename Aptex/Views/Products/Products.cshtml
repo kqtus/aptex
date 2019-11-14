@@ -1,0 +1,14 @@
+﻿@using Aptex.ViewModels
+@model ProductsViewModel
+@{
+    ViewBag.Title = "Products";
+    Layout = "_Layout";
+}
+
+@foreach (var product in Model.Products)
+{
+    <div>
+        @await Component.InvokeAsync("Product", product)
+    </div>
+}
+
