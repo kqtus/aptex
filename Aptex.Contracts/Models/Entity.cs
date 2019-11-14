@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aptex.Contracts.ViewModels
+namespace Aptex.Contracts.Models
 {
-    public class BasketViewModel
+    public class Entity
     {
-        public int ItemsCount { get; set; }
+        public int Id { get; set; }
     }
 }

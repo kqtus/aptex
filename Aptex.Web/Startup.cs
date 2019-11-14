@@ -9,10 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Aptex.Interfaces;
+using Aptex.Contracts.Interfaces;
 using Aptex.Services;
 
-namespace Aptex
+namespace Aptex.Web
 {
     public class Startup
     {

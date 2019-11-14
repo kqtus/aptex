@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aptex.Models;
+using Aptex.Contracts.Models;
 
-namespace Aptex.Interfaces
+namespace Aptex.Contracts.Interfaces
 {
     public interface IProductsService
     {
         List<Product> List();
+
+        List<Product> ListByCategories(List<int> categoryIds);
     }
 }

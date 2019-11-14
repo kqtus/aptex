@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aptex.Interfaces;
+using Aptex.Contracts.Interfaces;
 
 namespace Aptex.Services
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Aptex.Models
+namespace Aptex.Contracts.Models
 {
     public class ErrorViewModel
     {

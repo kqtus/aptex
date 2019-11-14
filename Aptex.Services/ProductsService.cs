@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aptex.Interfaces;
-using Aptex.Models;
+using Aptex.Contracts.Interfaces;
+using Aptex.Contracts.Models;
 
 namespace Aptex.Services
 {
     public class ProductsService : IProductsService
     {
+        public ProductsService()
+        {
+
+        }
+
         public List<Product> List()
         {
             return new List<Product>
@@ -28,6 +33,11 @@ namespace Aptex.Services
                     Quantity = "50szt."
                 }
             };
+        }
+
+        public List<Product> ListByCategories(List<int> categoryIds)
+        {
+            return new List<Product>();
         }
     }
 }

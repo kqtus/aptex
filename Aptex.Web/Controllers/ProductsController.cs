@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aptex.Interfaces;
-using Aptex.ViewModels;
+using Aptex.Contracts.Interfaces;
+using Aptex.Contracts.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Aptex.Controllers
+namespace Aptex.Web.Controllers
 {
     public class ProductsController : Controller
     {

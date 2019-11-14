@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aptex.Models
+namespace Aptex.Contracts.Models
 {
-    public class Product
+    public class Product : Entity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string Reception { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aptex.ViewModels
+namespace Aptex.Contracts.ViewModels
 {
     public class ProductViewModel
     {

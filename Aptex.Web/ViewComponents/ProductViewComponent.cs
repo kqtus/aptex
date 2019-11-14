@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Aptex.ViewModels;
+using Aptex.Contracts.ViewModels;
 
-namespace Aptex.ViewComponents
+namespace Aptex.Web.ViewComponents
 {
     public class ProductViewComponent : ViewComponent
     {

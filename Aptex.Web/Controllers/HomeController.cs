@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Aptex.Models;
+using Aptex.Contracts.Models;
 
-namespace Aptex.Controllers
+namespace Aptex.Web.Controllers
 {
     public class HomeController : Controller
     {
