@@ -8,9 +8,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AspNetCore.Identity.LiteDB.Data;
 
 using Aptex.Contracts.Interfaces;
+using Aptex.Contracts.Models;
+using Aptex.Infrastructure.LiteDB;
 using Aptex.Services;
+
 
 namespace Aptex.Web
 {
@@ -28,6 +32,9 @@ namespace Aptex.Web
         {
             services.AddControllersWithViews();
 
+            services.AddSingleton<ILiteDbContext, LiteDbContext>();
+            services.AddSingleton<IRepository<Product>, LiteDBRepository<Product>>();
+            services.AddSingleton<IRepository<ProductInBasket>, LiteDBRepository<ProductInBasket>>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IBasketService, BasketService>();
         }

@@ -10,11 +10,9 @@ namespace Aptex.Contracts.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : Entity
     {
-        Task<TEntity> GetById(int id);
+        TEntity Get(int id);
 
-        Task<IEnumerable<TEntity>> List();
-
-        IQueryable<TEntity> Queryable();
+        IEnumerable<TEntity> List();
 
         int Add(TEntity entity);
 

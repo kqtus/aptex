@@ -7,15 +7,16 @@ using Aptex.Contracts.Models;
 
 namespace Aptex.Services
 {
-    public class ProductsService : IProductsService
+    public class ProductsService : CrudService<Product>, IProductsService
     {
-        public ProductsService()
+        public ProductsService(IRepository<Product> repo)
+            : base(repo)
         {
-
         }
 
         public List<Product> List()
         {
+            /*
             return new List<Product>
             {
                 new Product
@@ -33,11 +34,18 @@ namespace Aptex.Services
                     Quantity = "50szt."
                 }
             };
+            */
+            return this._repo
+                .List()
+                .ToList();
         }
 
         public List<Product> ListByCategories(List<int> categoryIds)
         {
-            return new List<Product>();
+            return this._repo
+                .List()
+                .Where(x => categoryIds.Contains(x.CategoryId))
+                .ToList();
         }
     }
 }

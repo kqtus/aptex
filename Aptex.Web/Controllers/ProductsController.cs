@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Aptex.Contracts.Interfaces;
+using Aptex.Contracts.Models;
 using Aptex.Contracts.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,25 @@ namespace Aptex.Web.Controllers
             };
 
             return View("Products", viewModel);
+        }
+
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost("[controller]/Add")]
+        public ActionResult Add(ProductViewModel viewModel)
+        {
+            productsService.Add(new Product
+            {
+                Name = viewModel.ProductName,
+                Reception = viewModel.ProductReception,
+                Price = viewModel.Price,
+                Quantity = viewModel.Quantity
+            });
+
+            return Redirect("Index");
         }
 
         /*

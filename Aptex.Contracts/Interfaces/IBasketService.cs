@@ -6,7 +6,7 @@ using Aptex.Contracts.Models;
 
 namespace Aptex.Contracts.Interfaces
 {
-    public interface IBasketService
+    public interface IBasketService : ICrudService<ProductInBasket>
     {
         int ItemsCount();
     }

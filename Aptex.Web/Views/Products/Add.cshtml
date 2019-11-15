@@ -1,0 +1,30 @@
+﻿@model Aptex.Contracts.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm("Add", "Products"))
+{
+    <h3>Add product</h3>
+
+    <div class="form-group">
+        <label for="productNameInput">Product name</label>
+        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @id = "productNameInput", @placeholder = "John Woo" })
+
+        <label for="leafletInput">Leaflet</label>
+        @Html.TextBoxFor(m => m.ProductReception, new { @class = "form-control", @id = "leafletInput" })
+
+        <label for="priceInput">Price</label>
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @id = "priceInput" })
+
+        <label for="quantityInput">Quantity</label>
+        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", @id = "quantityInput" })
+    </div>
+
+    <button type="button" class="btn btn-light">Cancel</button>
+    <button type="submit" class="btn btn-success">Add</button>
+}
+
+
+

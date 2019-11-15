@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Aptex.Contracts.Interfaces;
+using Aptex.Contracts.Models;
 
 namespace Aptex.Services
 {
-    public class BasketService : IBasketService
+    public class BasketService : CrudService<ProductInBasket>, IBasketService
     {
+        public BasketService(IRepository<ProductInBasket> repo)
+            : base(repo)
+        {
+        }
+
         public int ItemsCount()
         {
-            return 10;
+            return this._repo.List().Count();
         }
     }
 }
