@@ -3,7 +3,8 @@
     ViewData["Title"] = "Basket";
 }
 
-<form>
+@using (Html.BeginForm("Index", "Basket"))
+{
     <h1>Basket</h1>
 
     <h3>Items</h3>
@@ -31,7 +32,7 @@
 
     <h3>Order details</h3>
     <button type="button" class="btn btn-light">Cancel</button>
-    <button type="button" class="btn btn-success">Order</button>
-</form>
+    <button type="submit" class="btn btn-success">Order</button>
+}
 
 

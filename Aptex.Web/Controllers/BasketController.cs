@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Aptex.Contracts.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aptex.Web.Controllers
@@ -11,6 +12,12 @@ namespace Aptex.Web.Controllers
         public IActionResult Index()
         {
             return View("Basket");
+        }
+
+        [HttpPost]
+        public IActionResult Index(BasketSummaryViewModel viewModel)
+        {
+            return View("Success");
         }
     }
 }
