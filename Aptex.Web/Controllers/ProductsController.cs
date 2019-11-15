@@ -15,13 +15,17 @@ namespace Aptex.Web.Controllers
     {
         private readonly IProductsService productsService;
 
+        private readonly IBasketService basketService;
+
         private readonly ICategoriesService categoriesService;
 
         public ProductsController(
             IProductsService productsService,
+            IBasketService basketService,
             ICategoriesService categoriesService)
         {
             this.productsService = productsService;
+            this.basketService = basketService;
             this.categoriesService = categoriesService;
         }
 
@@ -34,6 +38,7 @@ namespace Aptex.Web.Controllers
                     .List()
                     .Select(product => new ProductViewModel
                     {
+                        ProductId = product.Id,
                         ProductName = product.Name,
                         ProductReception = product.Reception,
                         Price = product.Price,
@@ -60,7 +65,7 @@ namespace Aptex.Web.Controllers
             return View();
         }
 
-        [HttpPost("[controller]/Add")]
+        [HttpPost]
         public ActionResult Add(ProductViewModel viewModel)
         {
             productsService.Add(new Product
@@ -74,82 +79,18 @@ namespace Aptex.Web.Controllers
             return Redirect("Index");
         }
 
-        /*
 
-        // GET: Products/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Products/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Products/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult AddToBasket(ProductViewModel viewModel)
         {
-            try
+            basketService.Add(new ProductInBasket
             {
-                // TODO: Add insert logic here
+                ProductId = viewModel.ProductId,
+                UserId = "user1",
+                Count = 1
+            });
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Redirect("Index");
         }
-
-        // GET: Products/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Products/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Products/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        */
     }
 }

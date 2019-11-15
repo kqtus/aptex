@@ -93,3 +93,44 @@ body {
     border: 3px solid #418457;
     padding: 1px 3px 1px 3px; 
 }
+
+.aptex-product-card {
+    background-color: #C1D7C8;
+    border-width: 2px;
+    border-color: #418457;
+    border-radius: 0;
+    margin: 10px;
+}
+
+.aptex-product-card-body {
+    padding: 10px;
+}
+
+.aptex-product-card-body p {
+    margin-bottom: 5px;
+}
+
+.aptex-product-card-header {
+    color: #418457;
+    font-weight: bold;
+}
+
+.aptex-product-card-img-wrap {
+    margin-top: 10px;
+    height: 100px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 50% auto;
+}
+
+.aptex-add-btn {
+    display: block;
+    text-align: center;
+    background-color: #418457;
+    color: #C1D7C8;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 0px 10px 0px;
+    border-radius: 0;
+}

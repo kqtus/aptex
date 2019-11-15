@@ -16,7 +16,10 @@ namespace Aptex.Services
 
         public int ItemsCount()
         {
-            return this._repo.List().Count();
+            return this._repo
+                .List()
+                .Select(prod => prod.Count)
+                .Sum();
         }
     }
 }

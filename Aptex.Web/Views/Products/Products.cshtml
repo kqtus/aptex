@@ -4,23 +4,24 @@
     Layout = "_Layout";
 }
 
-@using (Html.BeginForm("Index", "Home"))
-{
-    
+
     <div class="row">
         <div class="col-md-3">
-            <h4>Categories</h4>
-            @foreach (var categorySelect in Model.Categories)
+            @using (Html.BeginForm("Index", "Home"))
             {
-                <div>
-                    <input type="checkbox" value="@categorySelect.Id"
-                           @if (categorySelect.Selected)
-                           {
-                               <text>checked</text>
-                           }/> @categorySelect.Name
-                </div>
+                <h4>Categories</h4>
+                @foreach (var categorySelect in Model.Categories)
+                {
+                    <div>
+                        <input type="checkbox" value="@categorySelect.Id"
+                               @if (categorySelect.Selected)
+                               {
+                                   <text>checked</text>
+                               }/> @categorySelect.Name
+                    </div>
+                }
+                <button type="submit" class="btn btn-success">Filter</button>
             }
-            <button type="submit" class="btn btn-success">Filter</button>
         </div>
         <div class="col-md-9">
             <h4>Products</h4>
@@ -34,6 +35,6 @@
             </div>
         </div>
     </div>
-}
+
 
 

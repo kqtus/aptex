@@ -7,6 +7,8 @@ namespace Aptex.Contracts.ViewModels
 {
     public class ProductViewModel
     {
+        public int ProductId { get; set; }
+
         public string ProductName { get; set; }
 
         public string ProductReception { get; set; }
@@ -14,5 +16,7 @@ namespace Aptex.Contracts.ViewModels
         public decimal Price { get; set; }
 
         public string Quantity { get; set; }
+
+        public int BasketItemsCount { get; set; }
     }
 }
