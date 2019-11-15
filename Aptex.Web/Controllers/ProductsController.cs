@@ -15,9 +15,14 @@ namespace Aptex.Web.Controllers
     {
         private readonly IProductsService productsService;
 
-        public ProductsController(IProductsService productsService)
+        private readonly ICategoriesService categoriesService;
+
+        public ProductsController(
+            IProductsService productsService,
+            ICategoriesService categoriesService)
         {
             this.productsService = productsService;
+            this.categoriesService = categoriesService;
         }
 
         // GET: Products
@@ -33,6 +38,16 @@ namespace Aptex.Web.Controllers
                         ProductReception = product.Reception,
                         Price = product.Price,
                         Quantity = product.Quantity
+                    })
+                    .ToList(),
+
+                Categories = this.categoriesService
+                    .List()
+                    .Select(category => new CategorySelectViewModel
+                    {
+                        Id = category.Id,
+                        Name = category.Name,
+                        Selected = false
                     })
                     .ToList()
             };

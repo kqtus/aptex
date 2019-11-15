@@ -6,8 +6,7 @@ using Aptex.Contracts.Models;
 
 namespace Aptex.Contracts.Interfaces
 {
-    public interface IProductsService : ICrudService<Product>
+    public interface ICategoriesService : ICrudService<Category>
     {
-        List<Product> ListByCategories(List<int> categoryIds);
     }
 }

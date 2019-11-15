@@ -41,5 +41,10 @@ namespace Aptex.Services
 
             return _repo.Save();
         }
+
+        public virtual IEnumerable<TEntity> List()
+        {
+            return _repo.List();
+        }
     }
 }

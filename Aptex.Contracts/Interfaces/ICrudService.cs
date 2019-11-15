@@ -15,5 +15,7 @@ namespace Aptex.Contracts.Interfaces
         bool Update(TEntity entity);
 
         TEntity Get(int entityId);
+
+        IEnumerable<TEntity> List();
     }
 }
