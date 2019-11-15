@@ -3,36 +3,78 @@
     ViewData["Title"] = "Basket";
 }
 
-@using (Html.BeginForm("Index", "Basket"))
-{
-    <h1>Basket</h1>
 
-    <h3>Items</h3>
+<h1>Basket</h1>
 
-    <h3>Customer details</h3>
-    <div class="form-group">
-        <label for="fullNameInput">Full name</label>
-        <input type="text" class="form-control" id="fullNameInput" placeholder="John Woo">
+<h3>Items</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Number of items</th>
+        <th>Price</th>
+        <th>Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var product in Model.Products)
+    {
+        <tr>
+            <td>#</td>
+            <td>@product.ProductName</td>
+            <td>@product.Quantity</td>
+            <td>@product.BasketItemsCount</td>
+            <td>@product.Price</td>
+            <td>#</td>
+        </tr>
+    }
+    </tbody>
+</table>
 
-        <label for="emailInput">Email</label>
-        <input type="email" class="form-control" id="emailInput" placeholder="abc@@email.com">
+<div class="row">
+    <div class="col">
+        <h3>Customer details</h3>
+        <div class="form-group">
+            <label for="fullNameInput">Full name</label>
+            <input type="text" class="form-control" id="fullNameInput" placeholder="John Woo">
+
+            <label for="emailInput">Email</label>
+            <input type="email" class="form-control" id="emailInput" placeholder="abc@@email.com">
+        </div>
+
+        <h3>Recipient address</h3>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <label for="cityInput">City</label>
+                    <input type="text" class="form-control" id="cityInput" placeholder="New York">
+                </div>
+                <div class="col">
+                    <label for="cityCodeInput">Code</label>
+                    <input type="text" class="form-control" id="cityCodeInput" placeholder="00-000">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="streetInput">Street</label>
+                    <input type="text" class="form-control" id="streetInput" placeholder="Legnicka 1/4">
+                </div>
+            </div>
+        </div>
     </div>
+    
 
-    <h3>Recipient address</h3>
-    <div class="form-group">
-        <label for="cityInput">City</label>
-        <input type="text" class="form-control" id="cityInput" placeholder="New York">
-
-        <label for="cityCodeInput">Code</label>
-        <input type="text" class="form-control" id="cityCodeInput" placeholder="00-000">
-
-        <label for="streetInput">Street</label>
-        <input type="text" class="form-control" id="streetInput" placeholder="Legnicka 1/4">
+    <div class="col">
+        <h3>Order details</h3>
+        
+        @using (Html.BeginForm("Index", "Basket"))
+        {
+            <button type="button" class="btn btn-light">Cancel</button>
+            <button type="submit" class="btn btn-success">Order</button>
+        }
     </div>
-
-    <h3>Order details</h3>
-    <button type="button" class="btn btn-light">Cancel</button>
-    <button type="submit" class="btn btn-success">Order</button>
-}
+</div>
 
 
