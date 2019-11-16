@@ -13,22 +13,23 @@
         <th>#</th>
         <th>Product</th>
         <th>Quantity</th>
-        <th>Number of items</th>
         <th>Price</th>
-        <th>Remove</th>
+        <th class="text-right">Remove</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var product in Model.Products)
+    @foreach (var product in Model.Products.OrderBy(prod => prod.ProductName).ThenBy(prod => prod.Price))
     {
-        <tr>
-            <td>#</td>
-            <td>@product.ProductName</td>
-            <td>@product.Quantity</td>
-            <td>@product.BasketItemsCount</td>
-            <td>@product.Price</td>
-            <td>#</td>
-        </tr>
+        @using (Html.BeginForm("RemoveItem", "Basket", new { productId = product.ProductId }))
+        {
+            <tr>
+                <td>#</td>
+                <td>@product.ProductName</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price</td>
+                <td class="text-right"><button type="submit" class="btn btn-light"><i class="fas fa-trash-alt"></i></button></td>
+            </tr>
+        }
     }
     </tbody>
 </table>
@@ -68,12 +69,14 @@
 
     <div class="col">
         <h3>Order details</h3>
-        
-        @using (Html.BeginForm("Index", "Basket"))
-        {
-            <button type="button" class="btn btn-light">Cancel</button>
-            <button type="submit" class="btn btn-success">Order</button>
-        }
+        <div class="float-right">
+            <h4>Price: @Model.TotalPrice zł</h4>
+            @using (Html.BeginForm("Index", "Basket", FormMethod.Post, new { @class = "float-right" }))
+            {
+                <button type="button" class="btn btn-light">Cancel</button>
+                <button type="submit" class="btn btn-success">Order</button>
+            }
+        </div>
     </div>
 </div>
 

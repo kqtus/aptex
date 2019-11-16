@@ -9,9 +9,14 @@ namespace Aptex.Services
 {
     public class BasketService : CrudService<ProductInBasket>, IBasketService
     {
-        public BasketService(IRepository<ProductInBasket> repo)
+        private readonly IProductsService productsService;
+
+        public BasketService(
+            IRepository<ProductInBasket> repo,
+            IProductsService productsService)
             : base(repo)
         {
+            this.productsService = productsService;
         }
 
         public int ItemsCount()
@@ -19,6 +24,15 @@ namespace Aptex.Services
             return this._repo
                 .List()
                 .Select(prod => prod.Count)
+                .Sum();
+        }
+
+        public decimal TotalCost()
+        {
+            return this._repo
+                .List()
+                .Select(pib => this.productsService.Get(pib.ProductId))
+                .Select(prod => prod.Price)
                 .Sum();
         }
     }

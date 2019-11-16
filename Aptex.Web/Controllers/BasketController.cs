@@ -35,6 +35,7 @@ namespace Aptex.Web.Controllers
 
                         return new ProductViewModel
                         {
+                            ProductId = product.Id,
                             ProductName = product.Name,
                             ProductReception = product.Reception,
                             Price = product.Price,
@@ -42,7 +43,10 @@ namespace Aptex.Web.Controllers
                             BasketItemsCount = 1
                         };
                     })
-                    .ToList()
+                    .ToList(),
+
+                TotalPrice = this.basketService
+                    .TotalCost()
             };
             
             return View("Basket", viewModel);
@@ -52,6 +56,19 @@ namespace Aptex.Web.Controllers
         public IActionResult Index(BasketSummaryViewModel viewModel)
         {
             return View("Success");
+        }
+
+        [HttpPost]
+        public IActionResult RemoveItem(int productId)
+        {
+            var pb = basketService.List().FirstOrDefault(bp => bp.ProductId == productId);
+
+            if (pb != null)
+            {
+                basketService.Remove(pb);
+            }
+
+            return Redirect("Index");
         }
     }
 }
