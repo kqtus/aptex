@@ -30,12 +30,16 @@ namespace Aptex.Web.Controllers
         }
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(ProductsViewModel vm)
         {
+            var selectedCategories = vm.Categories.Where(cat => cat.Selected);
+
             var viewModel = new ProductsViewModel
             {
                 Products = this.productsService
                     .List()
+                    .Where(product => selectedCategories.Count() == 0
+                        || selectedCategories.Any(cat => cat.Id == product.Category?.Id))
                     .Select(product => new ProductViewModel
                     {
                         ProductId = product.Id,
@@ -46,20 +50,22 @@ namespace Aptex.Web.Controllers
                     })
                     .ToList(),
 
-                Categories = this.categoriesService
-                    .List()
-                    .Select(category => new CategorySelectViewModel
-                    {
-                        Id = category.Id,
-                        Name = category.Name,
-                        Selected = false
-                    })
-                    .ToList()
+                Categories = vm.Categories.Count == 0 
+                    ? this.categoriesService
+                        .List()
+                        .Select(category => new CategorySelectViewModel
+                        {
+                            Id = category.Id,
+                            Name = category.Name,
+                            Selected = false
+                        })
+                        .ToList()
+                    : vm.Categories
             };
 
             return View("Products", viewModel);
         }
-
+        
         public ActionResult Add()
         {
             return View();

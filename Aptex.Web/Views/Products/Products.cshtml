@@ -4,37 +4,35 @@
     Layout = "_Layout";
 }
 
-
-    <div class="row">
-        <div class="col-md-3">
-            @using (Html.BeginForm("Index", "Home"))
+<div class="row">
+    <div class="col-md-3">
+        @using (Html.BeginForm("Index", "Products"))
+        {
+            <h4>Categories</h4>
+            @for (int i = 0; i < Model.Categories.Count; i++)
             {
-                <h4>Categories</h4>
-                @foreach (var categorySelect in Model.Categories)
-                {
-                    <div>
-                        <input type="checkbox" value="@categorySelect.Id"
-                               @if (categorySelect.Selected)
-                               {
-                                   <text>checked</text>
-                               }/> @categorySelect.Name
-                    </div>
-                }
-                <button type="submit" class="btn btn-success">Filter</button>
+                <div>
+                    @Html.HiddenFor(model => model.Categories[i].Id)
+                    @Html.HiddenFor(model => model.Categories[i].Name)
+                    @Html.CheckBoxFor(model => model.Categories[i].Selected)
+                    @Model.Categories[i].Name
+                </div>
+            }
+            <button type="submit" class="btn btn-success float-right">Filter</button>
+        }
+    </div>
+    <div class="col-md-9">
+        <h4>Products</h4>
+        
+        <div style="display: flex">
+
+            @foreach (var product in Model.Products)
+            {
+                @await Component.InvokeAsync("Product", product)
             }
         </div>
-        <div class="col-md-9">
-            <h4>Products</h4>
-            
-            <div style="display: flex">
-
-                @foreach (var product in Model.Products)
-                {
-                    @await Component.InvokeAsync("Product", product)
-                }
-            </div>
-        </div>
     </div>
+</div>
 
 
 
