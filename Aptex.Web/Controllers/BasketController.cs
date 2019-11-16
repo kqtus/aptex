@@ -55,6 +55,8 @@ namespace Aptex.Web.Controllers
         [HttpPost]
         public IActionResult Index(BasketSummaryViewModel viewModel)
         {
+            basketService.Clear();
+
             return View("Success");
         }
 

@@ -11,5 +11,7 @@ namespace Aptex.Contracts.Interfaces
         int ItemsCount();
 
         decimal TotalCost();
+
+        void Clear();
     }
 }

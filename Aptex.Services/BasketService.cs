@@ -35,5 +35,15 @@ namespace Aptex.Services
                 .Select(prod => prod.Price)
                 .Sum();
         }
+
+        public void Clear()
+        {
+            var products = this._repo.List();
+
+            foreach (var prod in products)
+            {
+                this._repo.Delete(prod);
+            }
+        }
     }
 }
