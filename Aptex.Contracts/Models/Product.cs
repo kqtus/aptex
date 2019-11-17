@@ -17,5 +17,7 @@ namespace Aptex.Contracts.Models
         public string Quantity { get; set; }
 
         public int CategoryId { get; set; }
+
+        public bool OnPrescription { get; set; }
     }
 }

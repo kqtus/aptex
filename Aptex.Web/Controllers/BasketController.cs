@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Aptex.Contracts.Interfaces;
 using Aptex.Contracts.Models;
 using Aptex.Contracts.ViewModels;
@@ -12,14 +13,18 @@ namespace Aptex.Web.Controllers
 {
     public class BasketController : Controller
     {
+        private readonly IMapper mapper;
+
         private readonly IProductsService productsService;
 
         private readonly IBasketService basketService;
 
         public BasketController(
+            IMapper mapper,
             IProductsService productsService,
             IBasketService basketService)
         {
+            this.mapper = mapper;
             this.productsService = productsService;
             this.basketService = basketService;
         }
@@ -67,16 +72,10 @@ namespace Aptex.Web.Controllers
                 .Select(basketProduct =>
                 {
                     var product = productsService.Get(basketProduct.ProductId);
+                    var productViewModel = mapper.Map<ProductViewModel>(product);
+                    productViewModel.BasketItemsCount = 1;
 
-                    return new ProductViewModel
-                    {
-                        ProductId = product.Id,
-                        ProductName = product.Name,
-                        ProductReception = product.Reception,
-                        Price = product.Price,
-                        Quantity = product.Quantity,
-                        BasketItemsCount = 1
-                    };
+                    return productViewModel;
                 })
                 .ToList();
 

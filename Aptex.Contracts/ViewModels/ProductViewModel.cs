@@ -33,5 +33,7 @@ namespace Aptex.Contracts.ViewModels
 
         [Required]
         public int CategoryId { get; set; }
+        
+        public bool OnPrescription { get; set; }
     }
 }

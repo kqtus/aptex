@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Aptex.Contracts.Interfaces;
 using Aptex.Contracts.Models;
 using Aptex.Contracts.ViewModels;
@@ -15,6 +16,8 @@ namespace Aptex.Web.Controllers
 {
     public class ProductsController : Controller
     {
+        private readonly IMapper mapper;
+
         private readonly IProductsService productsService;
 
         private readonly IBasketService basketService;
@@ -22,10 +25,12 @@ namespace Aptex.Web.Controllers
         private readonly ICategoriesService categoriesService;
 
         public ProductsController(
+            IMapper mapper,
             IProductsService productsService,
             IBasketService basketService,
             ICategoriesService categoriesService)
         {
+            this.mapper = mapper;
             this.productsService = productsService;
             this.basketService = basketService;
             this.categoriesService = categoriesService;
@@ -42,25 +47,13 @@ namespace Aptex.Web.Controllers
                     .List()
                     .Where(product => selectedCategories.Count() == 0
                         || selectedCategories.Any(cat => cat.Id == product.CategoryId))
-                    .Select(product => new ProductViewModel
-                    {
-                        ProductId = product.Id,
-                        ProductName = product.Name,
-                        ProductReception = product.Reception,
-                        Price = product.Price,
-                        Quantity = product.Quantity
-                    })
+                    .Select(product => mapper.Map<ProductViewModel>(product))
                     .ToList(),
 
                 Categories = vm.Categories.Count == 0 
                     ? this.categoriesService
                         .List()
-                        .Select(category => new CategorySelectViewModel
-                        {
-                            Id = category.Id,
-                            Name = category.Name,
-                            Selected = false
-                        })
+                        .Select(category => mapper.Map<CategorySelectViewModel>(category))
                         .ToList()
                     : vm.Categories
             };
@@ -91,14 +84,7 @@ namespace Aptex.Web.Controllers
                 return View(viewModel);
             }
 
-            productsService.Add(new Product
-            {
-                Name = viewModel.ProductName,
-                Reception = viewModel.ProductReception,
-                Price = viewModel.Price,
-                Quantity = viewModel.Quantity,
-                CategoryId = viewModel.CategoryId
-            });
+            productsService.Add(mapper.Map<Product>(viewModel));
 
             return Redirect("Index");
         }
@@ -115,20 +101,10 @@ namespace Aptex.Web.Controllers
         public ActionResult SelectToEdit(ProductEditViewModel viewModel)
         {
             var product = productsService.Get(viewModel.SelectedProductId);
-            viewModel.SelectedProduct = new ProductViewModel
-            {
-                ProductId = product.Id,
-                ProductName = product.Name,
-                ProductReception = product.Reception,
-                Price = product.Price,
-                Quantity = product.Quantity,
-                Categories = categoriesService
-                    .List()
-                    .Select(category => new SelectListItem(category.Name, category.Id.ToString()))
-                    .ToList()
-            };
-
+            viewModel.SelectedProduct = mapper.Map<ProductViewModel>(product);
+            
             AppendEditableProducts(viewModel);
+            AppendProductCategories(viewModel.SelectedProduct);
 
             return View("Edit", viewModel);
         }
@@ -142,14 +118,10 @@ namespace Aptex.Web.Controllers
                 return View(viewModel);
             }
 
-            var originalProduct = productsService.Get(viewModel.SelectedProductId);
-            originalProduct.Name = viewModel.SelectedProduct.ProductName;
-            originalProduct.Reception = viewModel.SelectedProduct.ProductReception;
-            originalProduct.Price = viewModel.SelectedProduct.Price;
-            originalProduct.Quantity = viewModel.SelectedProduct.Quantity;
-            originalProduct.CategoryId = viewModel.SelectedProduct.CategoryId;
+            var modifiedProduct =
+                mapper.Map(viewModel.SelectedProduct, productsService.Get(viewModel.SelectedProductId));
 
-            productsService.Update(originalProduct);
+            productsService.Update(modifiedProduct);
 
             AppendEditableProducts(viewModel);
             AppendProductCategories(viewModel.SelectedProduct);
