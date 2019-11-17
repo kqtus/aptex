@@ -19,26 +19,35 @@ namespace Aptex.Services
             this.productsService = productsService;
         }
 
-        public int ItemsCount()
+        public int ItemsCount(string userId)
         {
             return this._repo
                 .List()
+                .Where(prod => prod.UserId.Equals(userId))
                 .Select(prod => prod.Count)
                 .Sum();
         }
 
-        public decimal TotalCost()
+        public decimal TotalCost(string userId)
         {
             return this._repo
                 .List()
-                .Select(pib => this.productsService.Get(pib.ProductId))
-                .Select(prod => prod.Price)
+                .Where(prod => prod.UserId.Equals(userId))
+                .Select(pib => new
+                {
+                    Product = this.productsService.Get(pib.ProductId),
+                    pib.Count
+                })
+                .Select(prodAndCount => prodAndCount.Product.Price * prodAndCount.Count)
                 .Sum();
         }
 
-        public void Clear()
+        public void Clear(string userId)
         {
-            var products = this._repo.List();
+            var products = this._repo
+                .List()
+                .Where(prod => prod.UserId.Equals(userId))
+                .ToList();
 
             foreach (var prod in products)
             {

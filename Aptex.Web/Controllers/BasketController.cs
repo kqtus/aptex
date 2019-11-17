@@ -42,7 +42,7 @@ namespace Aptex.Web.Controllers
                 return Basket(viewModel);
             }
 
-            basketService.Clear();
+            basketService.Clear("user1");
 
             return View("Success");
         }
@@ -96,7 +96,7 @@ namespace Aptex.Web.Controllers
             };
             
             viewModel.TotalPrice = this.basketService
-                .TotalCost();
+                .TotalCost("user1");
             
             return View("Basket", viewModel);
         }

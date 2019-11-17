@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aptex.Contracts\Aptex.Contracts.csproj" />
+    <ProjectReference Include="..\Aptex.Infrastructure\Aptex.Infrastructure.csproj" />
     <ProjectReference Include="..\Aptex.Services\Aptex.Services.csproj" />
   </ItemGroup>
 </Project>

@@ -8,10 +8,10 @@ namespace Aptex.Contracts.Interfaces
 {
     public interface IBasketService : ICrudService<ProductInBasket>
     {
-        int ItemsCount();
+        int ItemsCount(string userId);
 
-        decimal TotalCost();
+        decimal TotalCost(string userId);
 
-        void Clear();
+        void Clear(string userId);
     }
 }

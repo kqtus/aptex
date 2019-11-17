@@ -21,7 +21,7 @@ namespace Aptex.Web.ViewComponents
         {
             var viewModel = new BasketViewModel
             {
-                ItemsCount = this.basketService.ItemsCount()
+                ItemsCount = this.basketService.ItemsCount("user1")
             };
 
             return View(viewModel);
