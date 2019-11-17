@@ -14,6 +14,8 @@ namespace Aptex.Contracts.Models
 
         public decimal Price { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string Quantity { get; set; }
 
         public int CategoryId { get; set; }

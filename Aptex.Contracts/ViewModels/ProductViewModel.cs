@@ -19,6 +19,8 @@ namespace Aptex.Contracts.ViewModels
         [Required]
         public string ProductName { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string ProductReception { get; set; }
 
         [Range(0.0, 999.0)]

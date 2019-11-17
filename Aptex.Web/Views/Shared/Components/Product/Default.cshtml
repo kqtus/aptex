@@ -6,7 +6,17 @@
     @Html.HiddenFor(m => m.ProductId)
 
     <div class="card aptex-product-card" style="width: 18rem;">
-        <div class="aptex-product-card-img-wrap" style="background-image: url('https://rutinoscorbin.pl/resources/images/layout/vitamin-c-forte-packshot.png');"></div>
+        @if (!String.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div class="aptex-product-card-img-wrap" style="background-image: url('@Model.ImageUrl');"></div>
+        }
+        else
+        {
+            <div style="font-size: 24px; text-align: center; color: #418457; padding-top: 10%;" class="aptex-product-card-img-wrap">
+                <i class="far fa-images fa-2x"></i>
+            </div>
+        }
+
 
         <div class="aptex-product-card-body">
             <h6 class="aptex-product-card-header">@Model.ProductName, @Model.Quantity</h6>

@@ -86,7 +86,7 @@ namespace Aptex.Web.Controllers
 
             productsService.Add(mapper.Map<Product>(viewModel));
 
-            return Redirect("Index");
+            return View("Success");
         }
 
         public ActionResult Edit()

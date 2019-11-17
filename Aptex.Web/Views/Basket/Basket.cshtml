@@ -4,114 +4,127 @@
 }
 
 
-<div class="container form-group" style="width: 70%; margin: auto;">
-    <div class="row">
-        <h3 style="margin-bottom: 20px">Basket</h3>
-    </div>
-
-    <div class="row">
-        <h4>Items</h4>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th class="text-right">Remove</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var product in Model.Products.OrderBy(prod => prod.ProductName).ThenBy(prod => prod.Price))
-            {
-                @using (Html.BeginForm("RemoveItem", "Basket", new {productId = product.ProductId}))
-                {
-                    <tr>
-                        <td>#</td>
-                        <td>@product.ProductName</td>
-                        <td>@product.Quantity</td>
-                        <td>@product.Price</td>
-                        <td class="text-right"><button type="submit" class="btn btn-light"><i class="fas fa-trash-alt"></i></button></td>
-                    </tr>
-                }
-            }
-            </tbody>
-        </table>
-    </div>
-
-    @using (Html.BeginForm("Index", "Basket", FormMethod.Post))
-    {
+    <div class="container form-group" style="width: 70%; margin: auto;">
         <div class="row">
-            <div class="col">
-                <h5 style="margin-bottom: 10px">Customer details</h5>
-                <div class="form-group row">
-                    <label for="fullNameInput" class="col-sm-3 col-form-label">Name</label>
-                    <div class="col">
-                        @Html.TextBoxFor(m => m.CustomerFullName, new {@class = "form-control", @id = "fullNameInput", @placeholder = "John Woo"})
-                        @Html.ValidationMessageFor(model => model.CustomerFullName, "", new {@class = "text-danger"})
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="emailInput" class="col-sm-3 col-form-label">Email</label>
-                    <div class="col">
-                        @Html.TextBoxFor(m => m.CustomerEmail, new {@class = "form-control", @id = "emailInput", @placeholder = "abc@gmail.com", @type = "email"})
-                        @Html.ValidationMessageFor(model => model.CustomerEmail, "", new {@class = "text-danger"})
-                    </div>
-                </div>
-
-                <h5 style="margin-bottom: 10px">Recipient address</h5>
-                <div class="form-group row">
-                    <label for="cityInput" class="col-sm-3 col-form-label">City</label>
-                    <div class="col">
-                        @Html.TextBoxFor(m => m.AddrCity, new {@class = "form-control", @id = "cityInput", @placeholder = "New York"})
-                        @Html.ValidationMessageFor(model => model.AddrCity, "", new {@class = "text-danger"})
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="codeInput" class="col-sm-3 col-form-label">Code</label>
-                    <div class="col">
-                        @Html.TextBoxFor(m => m.AddrCode, new {@class = "form-control", @id = "codeInput", @placeholder = "00-000"})
-                        @Html.ValidationMessageFor(model => model.AddrCode, "", new {@class = "text-danger"})
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="streetInput" class="col-sm-3 col-form-label">Street</label>
-                    <div class="col">
-                        @Html.TextBoxFor(m => m.AddrSt, new {@class = "form-control", @id = "streetInput", @placeholder = "Legnicka 1/4"})
-                        @Html.ValidationMessageFor(model => model.AddrSt, "", new {@class = "text-danger"})
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <h5 style="margin-bottom: 10px">Order details</h5>
-
-                <div class="form-group row">
-                    <label for="deliverySelect" class="col-sm-3 col-form-label">Delivery</label>
-                    <div class="col">
-                        @Html.DropDownListFor(m => m.DeliveryOptionId, Model.DeliveryOptions, new { @class = "form-control", @id = "deliverySelect" })
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="paymentSelect" class="col-sm-3 col-form-label">Payment</label>
-                    <div class="col">
-                        @Html.DropDownListFor(m => m.PaymentOptionId, Model.PaymentOptions, new { @class = "form-control", @id = "paymentSelect" })
-                    </div>
-                </div>
-
-                <div class="float-right">
-                    <h4>Price: @Model.TotalPrice zł</h4>
-                    <div class="float-right">
-                        <button type="button" class="btn btn-light">Cancel</button>
-                        <button type="submit" class="btn btn-success">Order</button>
-                    </div>
-                </div>
-            </div>
+            <h3 style="margin-bottom: 20px">Basket</h3>
         </div>
-    }
-</div>
+
+        @if (Model.Products.Count > 0)
+        {
+            <div class="row">
+                <h4>Items</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th class="text-right">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Products.OrderBy(prod => prod.ProductName).ThenBy(prod => prod.Price))
+                        {
+                            @using (Html.BeginForm("RemoveItem", "Basket", new { productId = product.ProductId }))
+                            {
+                                <tr>
+                                    <td>#</td>
+                                    <td>@product.ProductName</td>
+                                    <td>@product.Quantity</td>
+                                    <td>@product.Price</td>
+                                    <td class="text-right"><button type="submit" class="btn btn-light"><i class="fas fa-trash-alt"></i></button></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @using (Html.BeginForm("Index", "Basket", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="col">
+                        <h5 style="margin-bottom: 10px">Customer details</h5>
+                        <div class="form-group row">
+                            <label for="fullNameInput" class="col-sm-3 col-form-label">Name</label>
+                            <div class="col">
+                                @Html.TextBoxFor(m => m.CustomerFullName, new { @class = "form-control", @id = "fullNameInput", @placeholder = "John Woo" })
+                                @Html.ValidationMessageFor(model => model.CustomerFullName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="emailInput" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col">
+                                @Html.TextBoxFor(m => m.CustomerEmail, new { @class = "form-control", @id = "emailInput", @placeholder = "abc@gmail.com", @type = "email" })
+                                @Html.ValidationMessageFor(model => model.CustomerEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <h5 style="margin-bottom: 10px">Recipient address</h5>
+                        <div class="form-group row">
+                            <label for="cityInput" class="col-sm-3 col-form-label">City</label>
+                            <div class="col">
+                                @Html.TextBoxFor(m => m.AddrCity, new { @class = "form-control", @id = "cityInput", @placeholder = "New York" })
+                                @Html.ValidationMessageFor(model => model.AddrCity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="codeInput" class="col-sm-3 col-form-label">Code</label>
+                            <div class="col">
+                                @Html.TextBoxFor(m => m.AddrCode, new { @class = "form-control", @id = "codeInput", @placeholder = "00-000" })
+                                @Html.ValidationMessageFor(model => model.AddrCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="streetInput" class="col-sm-3 col-form-label">Street</label>
+                            <div class="col">
+                                @Html.TextBoxFor(m => m.AddrSt, new { @class = "form-control", @id = "streetInput", @placeholder = "Legnicka 1/4" })
+                                @Html.ValidationMessageFor(model => model.AddrSt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <h5 style="margin-bottom: 10px">Order details</h5>
+
+                        <div class="form-group row">
+                            <label for="deliverySelect" class="col-sm-3 col-form-label">Delivery</label>
+                            <div class="col">
+                                @Html.DropDownListFor(m => m.DeliveryOptionId, Model.DeliveryOptions, new { @class = "form-control", @id = "deliverySelect" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="paymentSelect" class="col-sm-3 col-form-label">Payment</label>
+                            <div class="col">
+                                @Html.DropDownListFor(m => m.PaymentOptionId, Model.PaymentOptions, new { @class = "form-control", @id = "paymentSelect" })
+                            </div>
+                        </div>
+
+                        <div class="float-right">
+                            <h4>Price: @Model.TotalPrice zł</h4>
+                            <div class="float-right">
+                                <button type="button" class="btn btn-light" onclick="location.href='@Url.Action("Clear", "Basket")'">Clear basket</button>
+                                <button type="submit" class="btn btn-success">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="text-align: center; margin: 5%;">
+                <div style="font-size: 24px; color: #418457; margin: 5%">
+                    <i class="fas fa-box-open fa-5x"></i>
+                </div>
+                <h3 class="text-muted">Nothing in here...</h3>
+            </div>
+        }
+
+    </div>
 

@@ -60,6 +60,13 @@ namespace Aptex.Web.Controllers
             return Redirect("Index");
         }
 
+        [HttpGet]
+        public IActionResult Clear()
+        {
+            basketService.Clear("user1");
+            return Redirect("Index");
+        }
+
         protected IActionResult Basket(BasketSummaryViewModel viewModel = null)
         {
             if (viewModel == null)
