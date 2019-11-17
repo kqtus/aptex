@@ -70,14 +70,17 @@ namespace Aptex.Web.Controllers
         
         public ActionResult Add()
         {
-            var viewModel = new ProductViewModel
-            {
-                Categories = categoriesService.List()
-                    .Select(cat => new SelectListItem(cat.Name, cat.Id.ToString()))
-                    .ToList()
-            };
+            var viewModel = new ProductViewModel();
+            AppendProductCategories(viewModel);
 
             return View(viewModel);
+        }
+
+        protected void AppendProductCategories(ProductViewModel viewModel)
+        {
+            viewModel.Categories = categoriesService.List()
+                .Select(cat => new SelectListItem(cat.Name, cat.Id.ToString()))
+                .ToList();
         }
 
         [HttpPost]
@@ -102,13 +105,8 @@ namespace Aptex.Web.Controllers
 
         public ActionResult Edit()
         {
-            var viewModel = new ProductEditViewModel
-            {
-                Products = productsService
-                    .List()
-                    .Select(product => new SelectListItem(product.Name, product.Id.ToString()))
-                    .ToList(),
-            };
+            var viewModel = new ProductEditViewModel();
+            AppendEditableProducts(viewModel);
 
             return View(viewModel);
         }
@@ -130,13 +128,41 @@ namespace Aptex.Web.Controllers
                     .ToList()
             };
 
+            AppendEditableProducts(viewModel);
+
             return View("Edit", viewModel);
         }
 
         [HttpPost]
         public ActionResult Edit(ProductEditViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                AppendEditableProducts(viewModel);
+                return View(viewModel);
+            }
+
+            var originalProduct = productsService.Get(viewModel.SelectedProductId);
+            originalProduct.Name = viewModel.SelectedProduct.ProductName;
+            originalProduct.Reception = viewModel.SelectedProduct.ProductReception;
+            originalProduct.Price = viewModel.SelectedProduct.Price;
+            originalProduct.Quantity = viewModel.SelectedProduct.Quantity;
+            originalProduct.CategoryId = viewModel.SelectedProduct.CategoryId;
+
+            productsService.Update(originalProduct);
+
+            AppendEditableProducts(viewModel);
+            AppendProductCategories(viewModel.SelectedProduct);
+            
             return View(viewModel);
+        }
+
+        protected void AppendEditableProducts(ProductEditViewModel viewModel)
+        {
+            viewModel.Products = productsService
+                .List()
+                .Select(product => new SelectListItem(product.Name, product.Id.ToString()))
+                .ToList();
         }
 
         [HttpPost]
