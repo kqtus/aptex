@@ -1,0 +1,44 @@
+﻿@model Aptex.Contracts.ViewModels.ProductEditViewModel
+@{
+    ViewBag.Title = "Modify";
+    Layout = "_Layout";
+}
+
+<div class="container form-group" style="margin: auto; width: 70%">
+    <h3 style="margin-bottom: 20px;">Edit product</h3>
+    @using (Html.BeginForm("SelectToEdit", "Products"))
+    {
+        <div class="row">
+            <div class="col">
+                @Html.DropDownListFor(m => m.SelectedProductId, Model.Products, new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-success float-right">Select</button>
+            </div>
+        </div>
+    }
+    
+    <hr/>
+
+    @if (Model.SelectedProduct != null)
+    {
+        <div class="row">
+            <div class="col">
+                @using (Html.BeginForm("Edit", "Products"))
+                {
+                    <partial name="_ProductDetails" model="Model.SelectedProduct"/>
+
+                    <div class="float-right">
+                        <button type="reset" class="btn btn-light">Reset</button>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+

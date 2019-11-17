@@ -100,6 +100,44 @@ namespace Aptex.Web.Controllers
             return Redirect("Index");
         }
 
+        public ActionResult Edit()
+        {
+            var viewModel = new ProductEditViewModel
+            {
+                Products = productsService
+                    .List()
+                    .Select(product => new SelectListItem(product.Name, product.Id.ToString()))
+                    .ToList(),
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult SelectToEdit(ProductEditViewModel viewModel)
+        {
+            var product = productsService.Get(viewModel.SelectedProductId);
+            viewModel.SelectedProduct = new ProductViewModel
+            {
+                ProductId = product.Id,
+                ProductName = product.Name,
+                ProductReception = product.Reception,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                Categories = categoriesService
+                    .List()
+                    .Select(category => new SelectListItem(category.Name, category.Id.ToString()))
+                    .ToList()
+            };
+
+            return View("Edit", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ProductEditViewModel viewModel)
+        {
+            return View(viewModel);
+        }
 
         [HttpPost]
         public ActionResult AddToBasket(ProductViewModel viewModel)
