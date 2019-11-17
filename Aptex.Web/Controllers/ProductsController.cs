@@ -7,6 +7,8 @@ using Aptex.Contracts.Models;
 using Aptex.Contracts.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace Aptex.Web.Controllers
@@ -39,7 +41,7 @@ namespace Aptex.Web.Controllers
                 Products = this.productsService
                     .List()
                     .Where(product => selectedCategories.Count() == 0
-                        || selectedCategories.Any(cat => cat.Id == product.Category?.Id))
+                        || selectedCategories.Any(cat => cat.Id == product.CategoryId))
                     .Select(product => new ProductViewModel
                     {
                         ProductId = product.Id,
@@ -68,18 +70,31 @@ namespace Aptex.Web.Controllers
         
         public ActionResult Add()
         {
-            return View();
+            var viewModel = new ProductViewModel
+            {
+                Categories = categoriesService.List()
+                    .Select(cat => new SelectListItem(cat.Name, cat.Id.ToString()))
+                    .ToList()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult Add(ProductViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             productsService.Add(new Product
             {
                 Name = viewModel.ProductName,
                 Reception = viewModel.ProductReception,
                 Price = viewModel.Price,
-                Quantity = viewModel.Quantity
+                Quantity = viewModel.Quantity,
+                CategoryId = viewModel.CategoryId
             });
 
             return Redirect("Index");
