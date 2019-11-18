@@ -8,5 +8,7 @@ namespace Aptex.Contracts.Models
     public class Order : Entity
     {
         public List<ProductInOrder> ProductsInOrder { get; set; }
+
+        public string UserId { get; set; }
     }
 }

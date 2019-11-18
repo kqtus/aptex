@@ -19,6 +19,8 @@ namespace Aptex.Web.Controllers
 
         private readonly IBasketService basketService;
 
+        private readonly IOrderService orderService;
+
         public BasketController(
             IMapper mapper,
             IProductsService productsService,
@@ -27,6 +29,7 @@ namespace Aptex.Web.Controllers
             this.mapper = mapper;
             this.productsService = productsService;
             this.basketService = basketService;
+            this.orderService = orderService;
         }
 
         public IActionResult Index()
@@ -63,6 +66,19 @@ namespace Aptex.Web.Controllers
         [HttpGet]
         public IActionResult Clear()
         {
+            orderService.Add(new Order
+            {
+                ProductsInOrder = basketService
+                    .List()
+                    .Select(prod => new ProductInOrder
+                    {
+                        ProductId = prod.Id,
+                        Count = prod.Count
+                    })
+                    .ToList(),
+                UserId = "user1"
+            });
+
             basketService.Clear("user1");
             return Redirect("Index");
         }

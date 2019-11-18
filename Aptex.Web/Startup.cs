@@ -37,9 +37,11 @@ namespace Aptex.Web
             services.AddSingleton<IRepository<Product>, LiteDBRepository<Product>>();
             services.AddSingleton<IRepository<ProductInBasket>, LiteDBRepository<ProductInBasket>>();
             services.AddSingleton<IRepository<Category>, LiteDBRepository<Category>>();
+            services.AddSingleton<IRepository<Order>, LiteDBRepository<Order>>();
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IBasketService, BasketService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
